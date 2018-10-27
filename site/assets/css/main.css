@@ -1,0 +1,25 @@
+html {
+	/* Creates a left-to-right gradient overlay of the background image */
+    background-image: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.3)), url(../../images/cinema.jpg);
+    background-size: cover
+}
+
+h1, h2, h3, p {
+	color: white;
+}
+
+/* Style buttons */
+button, input[type="submit"], input[type="reset"]  {
+	font-size: 24px;
+    border: none; /* Remove borders */
+    background: blue;
+    color: white; /* White text */
+    padding: 16px 16px; /* Some padding */
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+button:hover {
+    color: grey;
+    background: lightblue;
+} 

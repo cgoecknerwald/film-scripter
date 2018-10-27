@@ -13,3 +13,5 @@ The base of this repository was borrowed from [Sean Robertson's](https://github.
 The model is based on Andrej Karpathy's popular [char-rnn](https://github.com/karpathy/char-rnn), which is described in detail on his [blogpost](https://karpathy.github.io/2015/05/21/rnn-effectiveness/).
 
 The practice dataset in `shakespeare` comes from [Ravexina's](https://github.com/ravexina) [shakespeare-plays-dataset-scraper](https://github.com/ravexina/shakespeare-plays-dataset-scraper).
+
+[Background image](https://unsplash.com/photos/evlkOfkQ5rE) taken from Unsplash's [Felix Mooneeram](https://unsplash.com/@felixmooneeram). 
