@@ -66,7 +66,7 @@ def train(inp, target):
     return loss.data[0] / args.chunk_len
 
 def save():
-    save_filename = os.path.splitext(os.path.basename(args.filename))[0] + '.pt'
+    save_filename = 'models/' + os.path.splitext(os.path.basename(args.filename))[0] + '.pt'
     torch.save(decoder, save_filename)
     print('Saved as %s' % save_filename)
 
