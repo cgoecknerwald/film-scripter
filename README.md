@@ -8,8 +8,22 @@ You can find the main dataset on [figshare](https://figshare.com/projects/imsdb_
 
 ### Usage
 
-pip install Flask
-FLASK_APP=hello.py flask run
+The folder `shakespeare` is a dataset of Shakespeare's plays. To run the server,
+
+```
+python3.6 -m pip install Flask
+python3.6 server.py
+```
+
+The website is locally hosted at `http://127.0.0.1:5000/`.
+
+To shutdown, visit
+
+```
+http://127.0.0.1:5000/shutdown
+```
+
+or click the shutdown button.
 
 ### Thanks
 
