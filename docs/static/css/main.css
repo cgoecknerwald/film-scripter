@@ -1,6 +1,6 @@
 html {
 	/* Creates a left-to-right gradient overlay of the background image */
-    background-image: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.3)), url(../../images/cinema.jpg);
+    background-color: black;
     background-size: cover
 }
 

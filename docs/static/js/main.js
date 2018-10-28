@@ -7,5 +7,8 @@
 
 // Generate the output of the trained model on button press
 function generate(){
-	$("#plot-output").html("Hello, World!");
+	$.getJSON(window.location.href + "generator", 
+		function(data){
+			$("#plot-output").html(data.text);
+	});
 }

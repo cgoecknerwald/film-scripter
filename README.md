@@ -6,6 +6,11 @@ Fall 2018
 
 You can find the main dataset on [figshare](https://figshare.com/projects/imsdb_movie_scripts/18907), courtesy of [Alberto Acerbi](https://acerbialberto.com/). This dataset contains 1,093 popular movie scripts.
 
+### Usage
+
+pip install Flask
+FLASK_APP=hello.py flask run
+
 ### Thanks
 
 The base of this repository was borrowed from [Sean Robertson's](https://github.com/spro) [char-rnn.pytorch](https://github.com/spro/char-rnn.pytorch) under the MIT License.
