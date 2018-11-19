@@ -5,11 +5,13 @@ import time
 import math
 import torch
 
-# Reading and un-unicode-encoding data
+# Reading and de-unicoding data
 all_characters = string.printable
 n_characters = len(all_characters)
 
 def read_file(filename):
+    # For now, we only intake textfiles
+    assert filename.endswith(".txt")
     file = unidecode.unidecode(open(filename).read())
     return file, len(file)
 

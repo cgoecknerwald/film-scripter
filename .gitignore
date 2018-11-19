@@ -1,4 +1,14 @@
 .ipynb_checkpoints/
 .DS_Store
 __pycache__/
+
+# The folder for massive and/or proprietary datasets 
 data/
+
+# No Latex compiler trash
+*.aux
+*.fdb_latexmk
+*.tex
+*.synctex.gz
+*.log
+*.fls

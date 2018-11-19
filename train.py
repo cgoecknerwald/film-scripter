@@ -14,7 +14,7 @@ from generate import *
 
 # Parse command line arguments
 argparser = argparse.ArgumentParser()
-argparser.add_argument('filename', type=str)
+argparser.add_argument('pathname', type=str)
 argparser.add_argument('--model', type=str, default="gru")
 argparser.add_argument('--n_epochs', type=int, default=1000)
 argparser.add_argument('--print_every', type=int, default=100)
@@ -30,12 +30,36 @@ args = argparser.parse_args()
 if args.cuda:
     print("Using CUDA")
 
-file, file_len = read_file(args.filename)
+def build_file_dict(pathname):
+    # Dict{string: [string, int]}
+    file_dict = {}
+    # Accept a single file
+    if os.path.isfile(pathname):
+        file, file_len = read_file(pathname)
+        file_dict[pathname] = [file, file_len]
+    # Alternately, accept a directory of files
+    else:
+        assert(os.path.isdir(pathname)), "Given pathname {} must be valid directory or file".format(pathname)
+        for f in os.listdir(pathname):
+            filename = os.path.join(pathname, os.fsdecode(f))
+            try:
+                file, file_len = read_file(filename)
+                file_dict[filename] = [file, file_len]
+            except Exception as e:
+                print("Exception: {} caused failure to read file '{}'".format(e, filename))
+                continue
+    # Assert non-empty dictionary of files
+    assert file_dict, "Function build_file_dict found no valid file(s) at {}".format(pathname)
+    return file_dict
 
-def random_training_set(chunk_len, batch_size):
+
+def random_training_set(file_dict, chunk_len, batch_size):
     inp = torch.LongTensor(batch_size, chunk_len)
     target = torch.LongTensor(batch_size, chunk_len)
+    # TODO: Make a more flexible batching algorithm to accomodate complete words.
     for bi in range(batch_size):
+        # Select from a random file in our file_dict
+        file, file_len = random.choice(list(file_dict.values()))
         start_index = random.randint(0, file_len - chunk_len)
         end_index = start_index + chunk_len + 1
         chunk = file[start_index:end_index]
@@ -66,7 +90,7 @@ def train(inp, target):
     return loss.data[0] / args.chunk_len
 
 def save():
-    save_filename = 'models/' + os.path.splitext(os.path.basename(args.filename))[0] + '.pt'
+    save_filename = 'models/' + os.path.splitext(os.path.basename(args.pathname))[0] + '.pt'
     torch.save(decoder, save_filename)
     print('Saved as %s' % save_filename)
 
@@ -89,18 +113,23 @@ all_losses = []
 loss_avg = 0
 
 try:
+    # Dict{string: [string, int]}
+    file_dict = build_file_dict(args.pathname)
+    print("Found files: {}".format(list(file_dict.keys())))
     print("Training for %d epochs..." % args.n_epochs)
     for epoch in tqdm(range(1, args.n_epochs + 1)):
-        loss = train(*random_training_set(args.chunk_len, args.batch_size))
+        loss = train(*random_training_set(file_dict, args.chunk_len, args.batch_size))
         loss_avg += loss
         if epoch % args.print_every == 0:
             print('[%s (%d %d%%) %.4f]' % (time_since(start), epoch, epoch / args.n_epochs * 100, loss))
             print(generate(decoder, 'Wh', 100, cuda=args.cuda), '\n')
 
     print("Saving...")
+    # TODO: close all files
     save()
 
 except KeyboardInterrupt:
     print("Saving before quit...")
+    # TODO: close all files
     save()
 
