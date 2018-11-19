@@ -90,7 +90,17 @@ def train(inp, target):
     return loss.data[0] / args.chunk_len
 
 def save():
-    save_filename = 'models/' + os.path.splitext(os.path.basename(args.pathname))[0] + '.pt'
+    # Modelname is the dirname for directorys and the filename for files
+    modelname = os.path.basename(args.pathname.rstrip('/'))
+    modelname = os.path.splitext(modelname)[0]
+    # Model names should have no punctuation or whitespace; only alphanumeric
+    # We also convert to lowercase and trim to the first 15 characters
+    modelname = ''.join(e for e in modelname if e.isalnum()).lower()[:15]
+    # Include model type, n_epochs, n_layers, hidden size, learning rate
+    modelname = modelname + '_' + args.model.upper() + '_NE' + str(args.n_epochs) \
+                          + '_NL' + str(args.n_layers) + '_HS' + str(args.hidden_size)
+
+    save_filename = 'models/' + modelname + '.pt'
     torch.save(decoder, save_filename)
     print('Saved as %s' % save_filename)
 
