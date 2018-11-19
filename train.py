@@ -87,7 +87,7 @@ def train(inp, target):
     decoder_optimizer.step()
 
     # Use tensor.item
-    return loss.data[0] / args.chunk_len
+    return loss.data.item() / args.chunk_len
 
 def save():
     # Modelname is the dirname for directorys and the filename for files
