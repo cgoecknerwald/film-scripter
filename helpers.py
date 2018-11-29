@@ -12,8 +12,9 @@ n_characters = len(all_characters)
 def read_file(filename):
     # For now, we only intake textfiles
     assert filename.endswith(".txt")
-    file = unidecode.unidecode(open(filename).read())
-    return file, len(file)
+    with open(filename) as file:
+        decode_file = unidecode.unidecode(file.read())
+        return decode_file, len(decode_file)
 
 # Turning a string into a tensor
 def char_tensor(string):
