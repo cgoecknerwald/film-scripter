@@ -5,6 +5,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 import argparse
 import os
+import pathlib
 
 from tqdm import tqdm
 
@@ -93,9 +94,8 @@ def save():
     subdir = 'models/'
     file_ext = ".pt"
 
-    if not os.path.exists(subdir):
-        print('Creating directory ' + subdir)
-        os.makedirs(subdir)
+    # Create 'models/' subdirectory if it does not already exist
+    pathlib.Path(subdir).mkdir(parents=True, exist_ok=True) 
 
     # Modelname is the dirname for directorys and the filename for files
     modelname = os.path.basename(args.pathname.rstrip('/'))
