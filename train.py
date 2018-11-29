@@ -90,6 +90,13 @@ def train(inp, target):
     return loss.data.item() / args.chunk_len
 
 def save():
+    subdir = 'models/'
+    file_ext = ".pt"
+
+    if not os.path.exists(subdir):
+        print('Creating directory ' + subdir)
+        os.makedirs(subdir)
+
     # Modelname is the dirname for directorys and the filename for files
     modelname = os.path.basename(args.pathname.rstrip('/'))
     modelname = os.path.splitext(modelname)[0]
@@ -100,7 +107,7 @@ def save():
     modelname = modelname + '_' + args.model.upper() + '_NE' + str(args.n_epochs) \
                           + '_NL' + str(args.n_layers) + '_HS' + str(args.hidden_size)
 
-    save_filename = 'models/' + modelname + '.pt'
+    save_filename = subdir + modelname + file_ext
     torch.save(decoder, save_filename)
     print('Saved as %s' % save_filename)
 
