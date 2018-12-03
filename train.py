@@ -60,12 +60,19 @@ def random_training_set(file_dict, chunk_len, batch_size):
     # TODO: Make a more flexible batching algorithm to accomodate complete words.
     for bi in range(batch_size):
         # Select from a random file in our file_dict
-        file, file_len = random.choice(list(file_dict.values()))
-        start_index = random.randint(0, file_len - chunk_len)
-        end_index = start_index + chunk_len + 1
-        chunk = file[start_index:end_index]
-        inp[bi] = char_tensor(chunk[:-1])
-        target[bi] = char_tensor(chunk[1:])
+        while True:
+            try:
+                file, file_len = random.choice(list(file_dict.values()))
+                start_index = random.randint(0, file_len - chunk_len)
+                end_index = start_index + chunk_len + 1
+                chunk = file[start_index:end_index]
+                inp[bi] = char_tensor(chunk[:-1])
+                target[bi] = char_tensor(chunk[1:])
+            except RuntimeError as e:
+                print(e)
+                print("Error in train.random_training_set(). Trying again...")
+            else:
+                break
     inp = Variable(inp)
     target = Variable(target)
     if args.cuda:
