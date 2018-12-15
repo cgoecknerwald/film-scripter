@@ -50,7 +50,7 @@ with open(output_filepath, "w", encoding="ascii") as output_file:
                     if line and set(line) <= accepted_set and not line.isupper() and "Gutenberg" not in line:
                         if next_line_caps == True:
                             line = line[0].upper() + line[1:]
-                        else: 
+                        else:
                             line = line[0].lower() + line[1:]
                         # If the line ends with a letter, comma, colon, or semicolon, remove newline.
                         # AKA: newlines are OK after .?!

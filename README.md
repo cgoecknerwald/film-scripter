@@ -33,4 +33,4 @@ The model is based on Andrej Karpathy's popular [char-rnn](https://github.com/ka
 
 The practice dataset in `shakespeare` comes from [Ravexina's](https://github.com/ravexina) [shakespeare-plays-dataset-scraper](https://github.com/ravexina/shakespeare-plays-dataset-scraper).
 
-[Background image](https://unsplash.com/photos/evlkOfkQ5rE) taken from Unsplash's [Felix Mooneeram](https://unsplash.com/@felixmooneeram). 
+[Background image](https://unsplash.com/photos/evlkOfkQ5rE) taken from Unsplash's [Felix Mooneeram](https://unsplash.com/@felixmooneeram).
