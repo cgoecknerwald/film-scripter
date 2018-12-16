@@ -84,7 +84,10 @@ def random_training_set(file_dict, chunk_len, batch_size):
 def train(inp, target):
     hidden = decoder.init_hidden(args.batch_size)
     if args.cuda:
-        hidden = hidden.cuda()
+        if args.model == "gru":
+            hidden = hidden.cuda()
+        else:
+            hidden = (hidden[0].cuda(), hidden[1].cuda())
     decoder.zero_grad()
     loss = 0
 
