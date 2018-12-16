@@ -29,7 +29,10 @@ argparser.add_argument('--shuffle', action='store_true')
 argparser.add_argument('--cuda', action='store_true')
 args = argparser.parse_args()
 
+using_cuda = False
+
 if args.cuda:
+    using_cuda = True
     print("Using CUDA")
 
 def build_file_dict(pathname):
@@ -116,7 +119,11 @@ def save():
     modelname = ''.join(e for e in modelname if e.isalnum()).lower()[:15]
     # Include model type, n_epochs, n_layers, hidden size, learning rate
     modelname = modelname + '_' + args.model.upper() + '_NE' + str(args.n_epochs) \
-                          + '_NL' + str(args.n_layers) + '_HS' + str(args.hidden_size)
+                          + '_NL' + str(args.n_layers) + '_HS' + str(args.hidden_size) \
+                          + '_D' + str(args.dropout).replace("0.", "")
+
+    if using_cuda:
+        modelname += '_CUDA'
 
     save_filename = subdir + modelname + file_ext
     torch.save(decoder, save_filename)
