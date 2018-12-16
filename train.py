@@ -16,14 +16,15 @@ from generate import *
 # Parse command line arguments
 argparser = argparse.ArgumentParser()
 argparser.add_argument('pathname', type=str)
-argparser.add_argument('--model', type=str, default="gru")
-argparser.add_argument('--n_epochs', type=int, default=1000)
+argparser.add_argument('--model', type=str, default="lstm")
+argparser.add_argument('--n_epochs', type=int, default=65536)
 argparser.add_argument('--print_every', type=int, default=100)
-argparser.add_argument('--hidden_size', type=int, default=100)
-argparser.add_argument('--n_layers', type=int, default=2)
+argparser.add_argument('--hidden_size', type=int, default=512)
+argparser.add_argument('--n_layers', type=int, default=3)
 argparser.add_argument('--learning_rate', type=float, default=0.01)
-argparser.add_argument('--chunk_len', type=int, default=200)
-argparser.add_argument('--batch_size', type=int, default=100)
+argparser.add_argument('--chunk_len', type=int, default=256)
+argparser.add_argument('--batch_size', type=int, default=128)
+argparser.add_argument('--dropout', type=int, default=0.25)
 argparser.add_argument('--shuffle', action='store_true')
 argparser.add_argument('--cuda', action='store_true')
 args = argparser.parse_args()
@@ -123,6 +124,7 @@ decoder = CharRNN(
     n_characters,
     args.hidden_size,
     n_characters,
+    dropout=args.dropout,
     model=args.model,
     n_layers=args.n_layers,
 )
